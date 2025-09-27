@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ROBUX MINATO</title>
+<style>
+body { font-family:Arial,sans-serif; background:#000; color:#fff; padding:18px; }
+.wrap{max-width:980px;margin:20px auto}
+header{display:flex;justify-content:space-between;align-items:center}
+h1{margin:0;font-size:22px;color:#0ea5a4}
+.btn{background:#0ea5a4;color:white;padding:10px 14px;border-radius:8px;text-decoration:none;cursor:pointer}
+.card{ background:#111; border-radius:10px; padding:14px; box-shadow:0 6px 18px rgba(255,255,255,0.1); margin-top:12px; }
+ul{padding-left:18px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+.small{font-size:13px;color:#ccc}
+.right{direction:rtl}
+@media(max-width:700px){.two{grid-template-columns:1fr}}
+li{cursor:pointer;color:#0ea5a4}
+input,select,button{width:100%;padding:10px;margin:8px 0;border-radius:6px;border:1px solid #444;background:#222;color:#fff}
+button{background:#0ea5a4;color:white;border:none;cursor:pointer}
+.info{background:#222;border-left:4px solid #34d399;padding:12px;border-radius:8px;margin-top:12px;color:#ccc;}
+#orderSection{display:none;}
+#totalPrice{font-weight:bold;margin-top:10px;color:#0ea5a4}
+
+/* Modal styles */
+#agreeModal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center;z-index:1000;}
+#agreeModalContent{background:#111;padding:20px;border-radius:10px;max-width:400px;color:#fff;text-align:center;}
+#agreeModalContent button{margin-top:12px;padding:10px 20px;background:#0ea5a4;border:none;border-radius:6px;color:white;cursor:pointer;}
+</style>
+<script>
+const prices = { "Roblox 400":25, "Roblox 800":50, "Roblox 1200":70 };
+
+function showOrderForm(gift, quantity){
+  document.getElementById('gift').value = gift;
+  document.getElementById('quantity').value = quantity;
+  updateTotal();
+  document.getElementById('orderSection').scrollIntoView({behavior:'smooth'});
+  document.getElementById('orderSection').style.display='block';
+}
+
+function updateTotal(){
+  const gift = document.getElementById('gift').value;
+  const quantity = parseInt(document.getElementById('quantity').value)||1;
+  const total = (prices[gift]*quantity).toFixed(2);
+  document.getElementById('totalPrice').innerText='المجموع: '+total+' DT';
+}
+
+function sendOrder(){
+  const name=document.getElementById("name").value;
+  const surname=document.getElementById("surname").value;
+  const email=document.getElementById("email").value;
+  const gift=document.getElementById("gift").value;
+  const quantity=document.getElementById("quantity").value;
+  const payment=document.getElementById("payment").value;
+
+  if(name && surname && email){
+    const msg={ content:`📢 طلب جديد:\n👤 الاسم: ${name} ${surname}\n📧 الإيميل: ${email}\n🎁 البطاقة: ${gift}\n🔢 الكمية: ${quantity}\n💳 الدفع: ${payment}` };
+    const webhookURL="https://discord.com/api/webhooks/1421242523204063353/EjvCaHbZdokvw0rTuUnbWPByEpUtIBr7gjRwoTBBoNBIkB9V8S0IZeg0uSva-awi8QJI";
+    fetch(webhookURL,{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(msg) })
+      .then(res=>{ if(res.ok){ document.getElementById('orderForm').reset(); document.getElementById('totalPrice').innerText='✅ تم إرسال الطلب وسيصلك في Discord!'; } 
+                  else document.getElementById('totalPrice').innerText='❌ فشل في إرسال الطلب.'; })
+      .catch(err=>{ document.getElementById('totalPrice').innerText='❌ حدث خطأ: '+err.message; });
+  } else {
+    document.getElementById('totalPrice').innerText='⚠️ يرجى تعبئة جميع الحقول';
+  }
+}
+
+// Modal
+function acceptRules(){
+  document.getElementById('agreeModal').style.display='none';
+  document.getElementById('orderSection').style.display='block';
+}
+</script>
+</head>
+<body>
+<div class="wrap">
+<header>
+<h1>ROBUX MINATO</h1>
+<span class="btn" onclick="showOrderForm('Roblox 400',1)">اطلب الآن</span>
+</header>
+
+<!-- Modal الاتفاق -->
+<div id="agreeModal">
+  <div id="agreeModalContent">
+    <h3>⚠️ قبل الطلب</h3>
+    <p>قبل ما نسلم الكود: لازم وصول المبلغ مؤكد عبر D17 أو نقداً. في حالة أي نزاع أو مشكلة، المبلغ <strong>لن يرجع مهما صار</strong>، والكود يعتبر نهائي.</p>
+    <button onclick="acceptRules()">I Agree</button>
+  </div>
+</div>
+
+<div class="card">
+<p class="small">اختر البطاقة من الأسفل لإرسال الطلب بعد الموافقة على القواعد.</p>
+</div>
+
+<div class="two">
+<div class="card right">
+<h3>كيفية الشراء</h3>
+<ol class="small">
+<li>اختر بطاقة Roblox.</li>
+<li>أرسل طلب عبر Discord: <strong>hokage8256</strong></li>
+<li>اختر طريقة الدفع بنفسك.</li>
+<li>بعد التأكد من الدفع، نرسل الكود وإيصال الشراء.</li>
+</ol>
+</div>
+
+<div class="card right">
+<h3>نماذج القيم</h3>
+<ul class="small">
+<li onclick="showOrderForm('Roblox 400',1)">Roblox 400 — 25DT</li>
+<li onclick="showOrderForm('Roblox 800',1)">Roblox 800 — 50DT</li>
+<li onclick="showOrderForm('Roblox 1200',1)">Roblox 1200 — 70DT</li>
+</ul>
+</div>
+</div>
+
+<div class="card" id="orderSection">
+<h3>صفحة الطلب</h3>
+<form id="orderForm" onsubmit="event.preventDefault(); sendOrder();">
+<label>الاسم</label>
+<input type="text" id="name" placeholder="ادخل اسمك" required>
+<label>اللقب</label>
+<input type="text" id="surname" placeholder="ادخل لقبك" required>
+<label>البريد الإلكتروني</label>
+<input type="email" id="email" placeholder="ادخل بريد Gmail" required 
+       pattern="[a-z0-9._%+-]+@gmail\.com$" 
+       title="يجب أن يكون بريد Gmail صالح">
+<label>اختر البطاقة</label>
+<select id="gift" onchange="updateTotal()">
+<option value="Roblox 400">Roblox 400 — 25DT</option>
+<option value="Roblox 800">Roblox 800 — 50DT</option>
+<option value="Roblox 1200">Roblox 1200 — 70DT</option>
+</select>
+<label>الكمية</label>
+<input type="number" id="quantity" min="1" value="1" oninput="updateTotal()">
+<label>طريقة الدفع</label>
+<select id="payment">
+<option value="D17">D17 (e-dinar)</option>
+<option value="نقداً">نقداً</option>
+</select>
+<button type="submit">إرسال الطلب</button>
+<p id="totalPrice"></p>
+</form>
+<div class="info">
+<p>بعد الدفع، سنرسل لك الكود عبر Discord: <strong>hokage8256</strong>.</p>
+<p>لا تشارك معلومات حساسة أو بنكية في رسائل عامة.</p>
+</div>
+</div>
+
+</div>
+</body>
+</html>
