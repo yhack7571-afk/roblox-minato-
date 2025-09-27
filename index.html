@@ -56,7 +56,7 @@ function sendOrder(){
 
   if(name && surname && email){
     const msg={ content:`📢 طلب جديد:\n👤 الاسم: ${name} ${surname}\n📧 الإيميل: ${email}\n🎁 البطاقة: ${gift}\n🔢 الكمية: ${quantity}\n💳 الدفع: ${payment}` };
-    const webhookURL="https://discord.com/api/webhooks/1421242523204063353/EjvCaHbZdokvw0rTuUnbWPByEpUtIBr7gjRwoTBBoNBIkB9V8S0IZeg0uSva-awi8QJI";
+    const webhookURL="https://discord.com/api/webhooks/1421564187448053840/uHLsTuwvwdsS4EBDjAlrPhibBMY4lUwERIox0MF4K0yvIyeri1AuODrZHYF7GIVeEvAG";
     fetch(webhookURL,{ method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify(msg) })
       .then(res=>{ if(res.ok){ document.getElementById('orderForm').reset(); document.getElementById('totalPrice').innerText='✅ تم إرسال الطلب وسيصلك في Discord!'; } 
                   else document.getElementById('totalPrice').innerText='❌ فشل في إرسال الطلب.'; })
@@ -150,3 +150,4 @@ function acceptRules(){
 </div>
 </body>
 </html>
+
